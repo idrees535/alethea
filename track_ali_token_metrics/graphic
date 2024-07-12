@@ -1,0 +1,42 @@
+
+digraph G {
+    graph [bgcolor="#343541"];
+    node [style="filled,rounded", shape="rectangle", gradientangle=270, color="grey", fillcolor="white:lightgrey", fontname="Helvetica", fontcolor="#343541"];
+    edge [color="#AAAAAA", fontname="Helvetica", fontsize=12, fontcolor="#EEEEEE", arrowsize=1];
+    
+    // Nodes
+    InitialSupply [label="Initial ALI Token Supply"]
+    TokenSinks [label="Token Sinks", fillcolor="#AEC6CF"]
+    DemandIncrease [label="Demand Increase from Utilities", fillcolor="#B4D7A8"]
+    CirculatingSupply [label="Circulating Supply", shape="ellipse"]
+    TokenPrice [label="Token Price", shape="ellipse"]
+    
+    // Edges
+    InitialSupply -> TokenSinks [label="Tokens locked in"]
+    InitialSupply -> DemandIncrease [label="Demand for tokens"]
+    TokenSinks -> CirculatingSupply [label="Decreases supply"]
+    DemandIncrease -> CirculatingSupply [label="Drives demand"]
+    CirculatingSupply -> TokenPrice [label="Influences price"]
+    
+    // Subgraphs for detailed token sinks
+    subgraph cluster_token_sinks {
+        label="Types of Token Sinks"
+        BondingCurve [label="Bonding Curves"]
+        LiquidityPools [label="Liquidity Pools"]
+        Credits [label="Credits for Interaction"]
+        
+        BondingCurve -> TokenSinks
+        LiquidityPools -> TokenSinks
+        Credits -> TokenSinks
+    }
+    
+    // Subgraphs for demand factors
+    subgraph cluster_demand_increase {
+        label="Utility Demand Factors"
+        CreditsPurchase [label="Credits Purchase"]
+        AgentTokensPurchase [label="Agent Tokens Purchase"]
+        
+        CreditsPurchase -> DemandIncrease
+        AgentTokensPurchase -> DemandIncrease
+    }
+}
